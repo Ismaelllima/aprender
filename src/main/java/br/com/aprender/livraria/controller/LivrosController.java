@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.observer.upload.UploadedFile;
 import br.com.caelum.vraptor.validator.Validator;
 
 @Controller
@@ -41,7 +42,7 @@ public class LivrosController {
 
     }
 
-    public void salva(Livro livro) {
+    public void salva(Livro livro, UploadedFile capa) {
         validator.validate(livro);
         validator.onErrorRedirectTo(this).formulario();
         estante.guarda(livro);

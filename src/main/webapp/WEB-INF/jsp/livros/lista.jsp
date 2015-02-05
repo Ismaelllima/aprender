@@ -36,7 +36,7 @@
                         <c:forEach items="${livroList}" var="livro">
                             <tr class="text-center">
                                 <td>${livro.titulo}</td>                                
-                                <td>${livro.descricao}</td>
+                                <td class="text-justify">${livro.descricao}</td>
                                 <td><a href="${linkTo[LivrosController].edita(livro.isbn)}"> Modificar </a></td>
                                 <td><a href="${linkTo[LivrosController].detalhes(livro.isbn)}">Detalhes</a></td>
                             </tr>

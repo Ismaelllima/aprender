@@ -24,6 +24,7 @@ public class Livro {
 	@NotNull(message = "O campo Titulo não pode ser nulo!!!")
 	private String titulo;
 	
+        @Column(length = 5000)
    	@NotEmpty(message = " O campo Descrição não pode ser vazio!!!")
 	private String descricao;
 	
