@@ -1,38 +1,49 @@
 package br.com.aprender.livraria.controller;
 
+import br.com.aprender.livraria.interfaces.Diretorio;
 import java.util.List;
 
 import javax.inject.Inject;
 import br.com.aprender.livraria.interfaces.Estante;
+import br.com.aprender.livraria.modelo.Arquivo;
 import br.com.aprender.livraria.modelo.Livro;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
 import br.com.caelum.vraptor.validator.Validator;
+import com.google.common.io.ByteStreams;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Calendar;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @Controller
 public class LivrosController {
 
-    private Estante estante;    
-    private Result result;   
+    private Estante estante;
+    private Result result;
     private Validator validator;
-    
-    @Inject
-    public LivrosController(Estante estante, Result result, Validator validator) {		
-		this.estante = estante;
-		this.result = result;
-		this.validator = validator;
-	}
+    private Diretorio imagens;
 
-	LivrosController() {
+    @Inject
+    public LivrosController(Estante estante, Diretorio imagens, Result result, Validator validator) {
+        this.estante = estante;
+        this.imagens = imagens;
+        this.result = result;
+        this.validator = validator;
+    }
+
+    LivrosController() {
     }
 
     public void ver() {
 
     }
-          
+
     @Get("livros/adicionar")
     public void formulario() {
 
@@ -42,9 +53,16 @@ public class LivrosController {
 
     }
 
-    public void salva(Livro livro, UploadedFile capa) {
-        validator.validate(livro);
+    @Post("/livros")
+    public void salva(@Valid Livro livro, UploadedFile capa) throws IOException {
         validator.onErrorRedirectTo(this).formulario();
+
+        if (capa != null) {
+            URI imagemcapa = imagens.grava(new Arquivo(capa.getFileName(), ByteStreams.toByteArray(capa.getFile()), capa.getContentType(), Calendar.getInstance()));
+            
+            livro.setCapa(imagemcapa);
+        }
+
         estante.guarda(livro);
         result.include("mensagem", "Livro cadastrado com sucesso!");
         result.redirectTo(this).lista();
@@ -74,11 +92,12 @@ public class LivrosController {
         Livro verLivro = estante.buscaPorIsbn(isbn);
         if (verLivro == null) {
             result.notFound();
-        }        
+        }
         result.include(verLivro);
         result.of(this).deletar();
 
     }
+
     @Get("livros/{isbn}/remove")
     public void remove(String isbn) {
         estante.deleta(estante.buscaPorIsbn(isbn));
