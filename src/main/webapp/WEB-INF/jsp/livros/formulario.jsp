@@ -25,7 +25,7 @@
                         <li>Titulo:<br /> <input type="text" name="livro.titulo" value="${livro.titulo}" />
                         </li>
                         
-                        <li>Capa:<br/> <input type="file" name="livro.capa" /></li>
+                        <li>Capa:<br/> <input type="file" name="capa" /></li>
 
                         <li>Descrição:<br /> <textarea  name="livro.descricao" value="${livro.descricao}" cols="5" rows="10"></textarea>
                         </li>

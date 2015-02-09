@@ -25,7 +25,8 @@
             <div class="table-responsive table-hover">
                 <table class="table">
                     <thead>
-                        <tr>                            
+                        <tr>
+                            <th>Capa</th>
                             <th class="text-center">Titulo</th>
                             <th class="text-center">Descrição</th>
                             <th></th>
@@ -35,6 +36,7 @@
                     <tbody>
                         <c:forEach items="${livroList}" var="livro">
                             <tr class="text-center">
+                                <td><img src="${linkTo[LivrosController].capa(livro.isbn)}"/></td>
                                 <td>${livro.titulo}</td>                                
                                 <td class="text-justify">${livro.descricao}</td>
                                 <td><a href="${linkTo[LivrosController].edita(livro.isbn)}"> Modificar </a></td>
