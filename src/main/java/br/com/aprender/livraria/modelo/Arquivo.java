@@ -5,23 +5,48 @@
  */
 package br.com.aprender.livraria.modelo;
 
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 
 /**
  *
  * @author UNASUS9
  */
-public class Arquivo {
+@Entity
+public class Arquivo implements Serializable {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String nome;
+
+    @Lob
     private byte[] conteudo;
-    private String ContentType;
+    private String ContentType;    
+   
     private Calendar datamodificacao;
+
+    Arquivo() {
+    }
 
     public Arquivo(String nome, byte[] conteudo, String ContentType, Calendar datamodificacao) {
         this.nome = nome;
         this.conteudo = conteudo;
         this.ContentType = ContentType;
         this.datamodificacao = datamodificacao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -55,6 +80,5 @@ public class Arquivo {
     public void setDatamodificacao(Calendar datamodificacao) {
         this.datamodificacao = datamodificacao;
     }
-    
-        
+
 }

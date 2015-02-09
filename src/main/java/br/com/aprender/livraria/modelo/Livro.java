@@ -3,7 +3,6 @@ package br.com.aprender.livraria.modelo;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity

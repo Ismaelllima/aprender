@@ -1,8 +1,6 @@
 package br.com.aprender.livraria.controller;
 
 import br.com.aprender.livraria.interfaces.Diretorio;
-import java.util.List;
-
 import javax.inject.Inject;
 import br.com.aprender.livraria.interfaces.Estante;
 import br.com.aprender.livraria.modelo.Arquivo;
@@ -12,13 +10,14 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.observer.download.ByteArrayDownload;
+import br.com.caelum.vraptor.observer.download.Download;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
 import br.com.caelum.vraptor.validator.Validator;
 import com.google.common.io.ByteStreams;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Calendar;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @Controller
@@ -59,7 +58,7 @@ public class LivrosController {
 
         if (capa != null) {
             URI imagemcapa = imagens.grava(new Arquivo(capa.getFileName(), ByteStreams.toByteArray(capa.getFile()), capa.getContentType(), Calendar.getInstance()));
-            
+
             livro.setCapa(imagemcapa);
         }
 
@@ -104,7 +103,7 @@ public class LivrosController {
         result.redirectTo(this).lista();
     }
 
-    @Get("livros/detalhes/{isbn}")
+    @Get("livros/{isbn}/detalhes")
     public void detalhes(String isbn) {
         Livro verLivro = estante.buscaPorIsbn(isbn);
 
@@ -115,6 +114,15 @@ public class LivrosController {
         result.include(verLivro);
 
         result.of(this).ver();
+    }
+
+    @Get("livros/{isbn}/capa")
+    public Download capa(String isbn) {
+        Livro livro = estante.buscaPorIsbn(isbn);
+        
+        Arquivo capa = imagens.recupera(livro.getCapa());
+        
+        return new ByteArrayDownload(capa.getConteudo(), capa.getContentType(), capa.getNome());
     }
 
 }
