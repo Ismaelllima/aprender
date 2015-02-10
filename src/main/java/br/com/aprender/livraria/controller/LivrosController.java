@@ -61,7 +61,6 @@ public class LivrosController {
 
             livro.setCapa(imagemcapa);
         }
-
         estante.guarda(livro);
         result.include("mensagem", "Livro cadastrado com sucesso!");
         result.redirectTo(this).lista();

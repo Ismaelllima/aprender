@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -22,6 +24,7 @@ public class Livro {
     @NotNull(message = "O campo Titulo não pode ser nulo!!!")
     private String titulo;
 
+    @NotEmpty(message = "O campo Capa não pode ser vazio!")
     private String capa;
 
     @Column(length = 5000)
@@ -38,6 +41,7 @@ public class Livro {
 
     @NotNull(message = " O campo é Obrigatorio!")
     @Past(message = " A data não pode ser futura!")
+    @Temporal(TemporalType.DATE)
     private Date dataPublicacao;
 
     public String getTitulo() {

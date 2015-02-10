@@ -27,7 +27,7 @@
                         
                         <li>Capa:<br/> <input type="file" name="capa" /></li>
 
-                        <li>Descrição:<br /> <textarea  name="livro.descricao" value="${livro.descricao}" cols="5" rows="10"></textarea>
+                        <li>Descrição:<br /> <textarea  name="livro.descricao">${livro.descricao}</textarea>
                         </li>
 
                         <li>ISBN:<br /> <input type="text" name="livro.isbn" value="${livro.isbn}" />

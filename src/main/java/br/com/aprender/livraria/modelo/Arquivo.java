@@ -1,23 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.aprender.livraria.modelo;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author UNASUS9
- */
 @Entity
-public class Arquivo implements Serializable {
+public class Arquivo {
 
     @Id
     @GeneratedValue
@@ -27,8 +19,10 @@ public class Arquivo implements Serializable {
 
     @Lob
     private byte[] conteudo;
+    
     private String ContentType;    
    
+    @Temporal(TemporalType.DATE)
     private Calendar datamodificacao;
 
     Arquivo() {
