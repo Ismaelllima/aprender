@@ -57,9 +57,9 @@ public class LivrosController {
         validator.onErrorRedirectTo(this).formulario();
 
         if (capa != null) {
-            URI imagemcapa = imagens.grava(new Arquivo(capa.getFileName(), ByteStreams.toByteArray(capa.getFile()), capa.getContentType(), Calendar.getInstance()));
+            URI imagemCapa = imagens.grava(new Arquivo(capa.getFileName(), ByteStreams.toByteArray(capa.getFile()), capa.getContentType(), Calendar.getInstance()));
 
-            livro.setCapa(imagemcapa);
+            livro.setCapa(imagemCapa);
         }
         estante.guarda(livro);
         result.include("mensagem", "Livro cadastrado com sucesso!");
@@ -121,7 +121,12 @@ public class LivrosController {
         
         Arquivo capa = imagens.recupera(livro.getCapa());
         
-        return new ByteArrayDownload(capa.getConteudo(), capa.getContentType(), capa.getNome());
+        if(capa == null){
+            result.notFound();
+            return null;
+        }
+        
+        return new ArquivoDownload(capa);
     }
 
 }

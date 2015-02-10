@@ -50,9 +50,8 @@ public class Livro {
 
     public URI getCapa() {
 
-        if (capa == null) {
-            return null;
-        }
+        if (capa == null) return null;
+        
         return URI.create(capa);
     }
 

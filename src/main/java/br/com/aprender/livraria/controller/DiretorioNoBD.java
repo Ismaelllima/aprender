@@ -23,7 +23,9 @@ public class DiretorioNoBD implements Diretorio {
     @Transactional
     @Override
     public URI grava(Arquivo arquivo) {
+        manager.getTransaction().begin();
         manager.persist(arquivo);
+        manager.getTransaction().commit();
         return URI.create("bd://" + arquivo.getId());
     }
 
